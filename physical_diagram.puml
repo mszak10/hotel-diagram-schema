@@ -1,0 +1,99 @@
+@startuml
+entity hotel {
+  * id: serial
+  --
+  * kraj_id: text(3)
+  * hotel_nazwa: text(32)
+  * hotel_email: text(255)
+  * hotel_adres: text(255)
+  * hotel_URL: text(255)
+}
+
+entity kraj {
+  * id: text(3)
+  --
+  * kraj_nazwa: text(63)
+  * kraj_waluta: text(63)
+}
+
+entity pokoj {
+  * id: serial
+  --
+  * hotel_id: int
+  * typ_pokoju_id: text(15)
+  * pokoj_pietro: text(10)
+  * pokoj_numer: int
+  * palenie: bool
+
+}
+
+entity dostepnosc_pokoju {
+  * id: serial
+  --
+  * pokoj_id: int
+  * dostepnosc: bool
+  * dostepnosc_data: timestamp 
+}
+
+entity typ_pokoju {
+  * id: text(15)
+  --
+  * ile_osob: int
+  * standard_pokoju: text(31)
+  * typ_pokoju_opis: text(255)
+}
+
+entity rezerwacja {
+  * id: serial
+  --
+  * pracownik_id: int
+  * status_rezerwacji_id: int
+  * gosc_id: int
+  * pokoj_id: int
+  * data_od: timestamp
+  * data_do: timestamp
+}
+
+entity gosc{
+  * id: serial
+  --
+  * gosc_imie: text(32)
+  * gosc_nazwisko: text(32)
+  * gosc_adres: text(255)
+  * gosc_detale: text(255)
+}
+
+entity status_rezerwacji{
+  * id: serial
+  --
+  *status_rezerwacji_tytul: text(15)
+  *status_rezerwacji_detale: text(255)
+}
+
+entity pracownik_rezerwacje {
+  * id: serial
+  --
+  * pracownik_id: int
+  * ilosc_gosci: int
+  * data_rezerwacji: timestamp
+} 
+
+entity pracownik{
+  * id: serial
+  --
+  * pracownik_imie: text(31)
+  * pracownik_nazwisko: text(31)
+  * pracownik_detale: text(255)
+}
+
+kraj    --|{ hotel
+hotel    --|{ pokoj
+typ_pokoju    --|{ pokoj
+pokoj    --|{ dostepnosc_pokoju
+pokoj    --|{ rezerwacja
+status_rezerwacji    --|{ rezerwacja
+pracownik_rezerwacje    --|{ rezerwacja
+pracownik    --|{ pracownik_rezerwacje
+gosc    --|{ rezerwacja
+
+@enduml
